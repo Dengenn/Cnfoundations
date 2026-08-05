@@ -24,6 +24,7 @@
 }
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -45,6 +46,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  min-width: 0;
 }
 
 h1,
@@ -158,6 +160,8 @@ header {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  overflow-x: hidden;
   z-index: 200;
   display: flex;
   justify-content: center;
@@ -167,7 +171,9 @@ header {
 .navbar {
   pointer-events: auto;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,6 +210,9 @@ header.scrolled .navbar {
   color: var(--maroon-deep);
   white-space: nowrap;
   min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .logo-slot {
   width: 36px;
@@ -233,6 +242,7 @@ nav.links {
   display: flex;
   gap: 6px;
   align-items: center;
+  min-width: 0;
 }
 nav.links a {
   --nav-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M11 3.5a1.5 1.5 0 0 1 2 0l8 7.1a1 1 0 0 1-1.3 1.5l-.7-.6V20a1 1 0 0 1-1 1h-4.5a1 1 0 0 1-1-1v-5h-1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8.5l-.7.6A1 1 0 0 1 3 10.6l8-7.1Z'/%3E%3C/svg%3E");
@@ -313,6 +323,9 @@ nav.links a.active {
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
+  flex-shrink: 0;
+  min-width: 42px;
+  min-height: 42px;
 }
 .hamburger span {
   width: 22px;
@@ -338,6 +351,14 @@ nav.links a.active {
     align-items: flex-start;
     flex-wrap: wrap;
     padding: 12px 18px;
+    max-width: 100vw;
+    min-width: 0;
+  }
+  .brand {
+    max-width: calc(100% - 68px);
+    white-space: normal;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
   }
   nav.links {
     display: none;
@@ -368,6 +389,8 @@ nav.links a.active {
   .hamburger {
     display: flex;
     margin-top: 0;
+    position: relative;
+    z-index: 3;
   }
 }
 @media (max-width: 520px) {
@@ -477,6 +500,8 @@ section.on-white {
   background: var(--cloth);
 }
 section.on-maroon {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(165deg, var(--maroon-deep) 0%, #250810 100%);
   color: var(--cloth);
 }
