@@ -1606,6 +1606,14 @@ section.on-maroon .section-head p {
   .news-card {
     grid-template-columns: 1fr;
     gap: 8px;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .news-card.flip-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   .news-card .date {
     display: flex;

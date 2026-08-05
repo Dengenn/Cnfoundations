@@ -89,7 +89,9 @@
   });
 
   var cards = list.querySelectorAll('.news-card');
-  if('IntersectionObserver' in window){
+  if(window.innerWidth <= 600){
+    cards.forEach(function(c){ c.classList.add('flip-in'); });
+  } else if('IntersectionObserver' in window){
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
