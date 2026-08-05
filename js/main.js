@@ -15,11 +15,14 @@
       var open = navLinks.classList.toggle('open');
       hamburger.classList.toggle('open', open);
       hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('no-scroll', open);
     });
     navLinks.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
       });
     });
   }

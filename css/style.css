@@ -48,6 +48,9 @@ body {
   overflow-x: hidden;
   min-width: 0;
 }
+body.no-scroll {
+  overflow: hidden;
+}
 
 h1,
 h2,
@@ -372,6 +375,12 @@ nav.links a.active {
   }
   nav.links.open {
     display: flex;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  nav.links.open::-webkit-scrollbar {
+    display: none;
   }
   nav.links a {
     justify-content: flex-start;
