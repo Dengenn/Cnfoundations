@@ -366,9 +366,9 @@ nav.links a.active {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
-    gap: 8px;
+    gap: 0;
     margin-top: 12px;
-    padding: 14px 0 6px;
+    padding: 4px 0 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(23, 23, 23, 0.35);
     backdrop-filter: blur(26px) saturate(200%);
@@ -385,13 +385,30 @@ nav.links a.active {
   }
   nav.links a {
     justify-content: flex-start;
-    padding: 13px 14px;
+    padding: 18px 6px;
     border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  nav.links a:last-child {
+    border-bottom: none;
   }
   nav.links a::before {
     width: 17px;
     height: 17px;
     flex-basis: 17px;
+  }
+  nav.links a::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    margin-left: auto;
+    border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor;
+    transform: rotate(-45deg);
+    opacity: 0.55;
+    flex-shrink: 0;
   }
   nav.links a.active {
     box-shadow: none;
@@ -794,7 +811,8 @@ section.on-maroon .section-head p {
   position: relative;
   z-index: 4;
   overflow: hidden;
-  box-shadow: 0 -34px 70px rgba(20, 5, 9, 0.22);
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0 -36px 64px rgba(20, 5, 9, 0.35);
 }
 .stack-wrap {
   display: grid;

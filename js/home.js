@@ -138,7 +138,7 @@
 
   function getStackLayout() {
     var w = window.innerWidth || document.documentElement.clientWidth;
-    if (w <= 520) return { x: 10, y: 9 };
+    if (w <= 520) return { x: 7, y: 6 };
     if (w <= 900) return { x: 18, y: 13 };
     return { x: 26, y: 16 };
   }
@@ -147,11 +147,16 @@
     if (!stackCards.length) return;
     var layout = getStackLayout();
     var rotations = [-2, 2, -3, 3, -2, 2, -1];
+    // Cap how many layers deep the fan-out offset keeps growing so the
+    // deck reads as a compact, centered stack instead of trailing off
+    // toward one edge once there are several cards behind the front one.
+    var maxDepth = 3;
     stackCards.forEach(function (card, i) {
       var slot = (i - activeCard + stackCards.length) % stackCards.length;
-      card.style.setProperty("--stack-x", layout.x * slot + "px");
-      card.style.setProperty("--stack-y", layout.y * slot + "px");
-      card.style.setProperty("--stack-r", rotations[slot] + "deg");
+      var depth = Math.min(slot, maxDepth);
+      card.style.setProperty("--stack-x", layout.x * depth + "px");
+      card.style.setProperty("--stack-y", layout.y * depth + "px");
+      card.style.setProperty("--stack-r", rotations[depth] + "deg");
       card.style.setProperty("--stack-z", String(stackCards.length - slot));
       card.classList.toggle("is-front", slot === 0);
       card.setAttribute("tabindex", slot === 0 ? "0" : "-1");
