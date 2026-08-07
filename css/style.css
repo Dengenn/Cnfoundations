@@ -5,6 +5,7 @@
 :root {
   --ink: #241512;
   --cloth: #f6eee1;
+  --cream: #f6eee1;
   --cloth-deep: #ecdfc7;
   --maroon: #7a1b2b;
   --maroon-deep: #360c13;
@@ -212,10 +213,9 @@ header.scrolled .navbar {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: "Work Sans", sans-serif;
-  font-weight: 600;
+  font-family: "Fuzzy Bubbles", cursive;
   font-size: 17px;
-  color: var(--white);
+  color: var(--cream);
   white-space: nowrap;
   min-width: 0;
   flex: 1 1 auto;
@@ -223,7 +223,7 @@ header.scrolled .navbar {
   text-overflow: ellipsis;
 }
 .navbar .brand {
-  color: var(--gold-soft);
+  color: var(--cream);
 }
 .logo-slot {
   width: 44px;
@@ -1786,7 +1786,7 @@ footer {
   margin-bottom: 40px;
 }
 footer .brand {
-  color: var(--white);
+  color: var(--cream);
   margin-bottom: 14px;
 }
 footer .foot-desc {
