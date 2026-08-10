@@ -165,7 +165,10 @@ header {
   left: 0;
   right: 0;
   width: 100%;
-  overflow-x: hidden;
+  /* Both axes explicitly hidden — the navbar must never be scrollable.
+     (Setting only overflow-x lets the spec silently promote overflow-y
+     to auto, which re-opens a scroll capability we don't want.) */
+  overflow: hidden;
   z-index: 200;
   display: flex;
   justify-content: center;
@@ -196,10 +199,35 @@ header {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(50, 45, 45, 0.7) 0%, rgba(23, 23, 23, 0.45) 50%);
-  backdrop-filter: blur(26px) saturate(200%);
-  -webkit-backdrop-filter: blur(26px) saturate(200%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    180deg,
+    rgba(18, 10, 10, 0.32) 0%,
+    rgba(18, 10, 10, 0.14) 55%,
+    rgba(18, 10, 10, 0) 100%
+  );
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+.navbar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 520px;
+  height: 150px;
+  transform: translate(-14%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(54, 12, 19, 0.8) 0%,
+    rgba(54, 12, 19, 0.55) 35%,
+    rgba(54, 12, 19, 0.24) 60%,
+    transparent 80%
+  );
+  filter: blur(34px);
   z-index: -1;
   pointer-events: none;
 }
@@ -233,25 +261,6 @@ header.scrolled .navbar {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.navbar .brand .logo-slot {
-  position: relative;
-  z-index: 0;
-}
-.navbar .brand .logo-slot::before {
-  content: "";
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(122, 27, 43, 0.7) 0%,
-    rgba(122, 27, 43, 0.32) 55%,
-    transparent 75%
-  );
-  filter: blur(14px);
-  z-index: -1;
-  pointer-events: none;
 }
 .logo-slot img {
   width: 100%;
@@ -373,6 +382,13 @@ nav.links a.active {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Scroll model:
+   — .navbar (desktop bar) is never scrollable — header clips it fully.
+   — nav.links (the mobile/tablet drawer) is only scrollable when the
+     viewport is short; see the max-height:500px query below, where
+     its scrollbar is hidden across engines
+     (WebKit/Blink, Gecko, legacy Trident/EdgeHTML). */
+
 @media (max-width: 1200px) {
   .navbar {
     align-items: flex-start;
@@ -402,7 +418,7 @@ nav.links a.active {
     margin: 0;
     padding: 32px 26px;
     border: none;
-    background: rgba(18, 12, 13, 0.97);
+    background: rgba(52, 48, 46, 0.96);
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
     box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
@@ -411,8 +427,9 @@ nav.links a.active {
   nav.links.open {
     display: flex;
     max-height: none;
-    overflow-y: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
   nav.links.open::-webkit-scrollbar {
     display: none;
@@ -440,6 +457,16 @@ nav.links a.active {
     background: transparent;
   }
 }
+
+/* Nav menu (drawer) only becomes scrollable on short viewports, so every
+   link stays reachable when there isn't enough vertical room for all of
+   them — outside this height range it stays non-scrollable. */
+@media (max-width: 1200px) and (max-height: 500px) {
+  nav.links.open {
+    overflow-y: auto;
+  }
+}
+
 @media (max-width: 520px) {
   .brand {
     font-size: 14.5px;
