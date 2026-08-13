@@ -418,7 +418,7 @@ nav.links a.active {
     margin: 0;
     padding: 32px 26px;
     border: none;
-    background: rgba(52, 48, 46, 0.96);
+    background: rgba(23, 23, 23, 0.96);
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
     box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
