@@ -16,6 +16,8 @@
   --max: 1180px;
   --glass-border: rgba(255, 255, 255, 0.28);
   --nav-h: 78px;
+  --nav-fg: var(--maroon-deep);
+  --nav-logo-bg: var(--maroon-deep);
 }
 
 * {
@@ -189,53 +191,19 @@ header {
   position: relative;
   isolation: isolate;
   border: 0;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4);
-  transition:
-    box-shadow 0.3s ease,
-    padding 0.3s ease;
-}
-.navbar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(18, 10, 10, 0.32) 0%,
-    rgba(18, 10, 10, 0.14) 55%,
-    rgba(18, 10, 10, 0) 100%
-  );
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-  z-index: -1;
-  pointer-events: none;
-}
-.navbar::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 520px;
-  height: 150px;
-  transform: translate(-14%, -50%);
-  background: radial-gradient(
-    ellipse at center,
-    rgba(54, 12, 19, 0.8) 0%,
-    rgba(54, 12, 19, 0.55) 35%,
-    rgba(54, 12, 19, 0.24) 60%,
-    transparent 80%
-  );
-  filter: blur(34px);
-  z-index: -1;
-  pointer-events: none;
+  background: none;
+  box-shadow: none;
+  transition: padding 0.3s ease;
 }
 header.scrolled .navbar {
-  box-shadow:
-    0 14px 40px rgba(0, 0, 0, 0.5);
   padding-top: 9px;
   padding-bottom: 9px;
+}
+/* Adaptive colors: header.on-dark is toggled by main.js depending on
+   which section sits behind the (now backgroundless) fixed navbar. */
+header.on-dark {
+  --nav-fg: var(--cream);
+  --nav-logo-bg: var(--cream);
 }
 .brand {
   display: flex;
@@ -251,7 +219,8 @@ header.scrolled .navbar {
   text-overflow: ellipsis;
 }
 .navbar .brand {
-  color: var(--cream);
+  color: var(--nav-fg);
+  transition: color 0.25s ease;
 }
 .logo-slot {
   width: clamp(36px, 2.59vw, 44px);
@@ -267,6 +236,12 @@ header.scrolled .navbar {
   height: 100%;
   object-fit: contain;
   border-radius: 12px;
+}
+.navbar .logo-slot {
+  border-radius: 50%;
+  background: var(--nav-logo-bg);
+  padding: 5px;
+  transition: background 0.25s ease;
 }
 .foot-grid .brand .logo-slot {
   width: 56px;
@@ -332,6 +307,14 @@ nav.links a:hover {
   color: var(--gold-soft);
   background: rgba(255, 255, 255, 0.08);
 }
+@media (min-width: 1201px) {
+  nav.links a:not(.active):not(.nav-cta) {
+    color: var(--nav-fg);
+  }
+  nav.links a:not(.active):not(.nav-cta):hover {
+    color: var(--gold-soft);
+  }
+}
 nav.links a.active {
   color: var(--white);
   background: linear-gradient(135deg, var(--maroon), var(--maroon-soft));
@@ -366,11 +349,15 @@ nav.links a.active {
 .hamburger span {
   width: 22px;
   height: 2px;
-  background: var(--white);
+  background: var(--nav-fg);
   border-radius: 2px;
   transition:
     transform 0.2s ease,
-    opacity 0.2s ease;
+    opacity 0.2s ease,
+    background 0.25s ease;
+}
+.hamburger.open span {
+  background: var(--white);
 }
 .hamburger.open span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
