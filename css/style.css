@@ -195,9 +195,31 @@ header {
   box-shadow: none;
   transition: padding 0.3s ease;
 }
+/* Scroll glass background: a colorless, blurred backdrop that appears only
+   once scrolling begins, separating the navbar from page content beneath
+   it. It lives on ::before (not on .navbar itself) so it never becomes a
+   containing block for the fixed-position mobile drawer (nav.links), and
+   it carries no background color/tint -- translucency alone does the
+   separation. z-index: -1 keeps it behind .brand / nav.links within the
+   stacking context .navbar already establishes (isolation: isolate). */
+.navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 header.scrolled .navbar {
   padding-top: 9px;
   padding-bottom: 9px;
+}
+header.scrolled .navbar::before {
+  opacity: 1;
 }
 /* Adaptive colors: header.on-dark is toggled by main.js depending on
    which section sits behind the (now backgroundless) fixed navbar. */
