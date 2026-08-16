@@ -341,14 +341,12 @@ nav.links a.active {
   color: var(--white);
   background: linear-gradient(135deg, var(--maroon), var(--maroon-soft));
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(122, 27, 43, 0.3);
 }
 .nav-cta {
   background: linear-gradient(135deg, var(--gold), #b3831f) !important;
   color: var(--maroon-deep) !important;
   padding: clamp(7px, 0.59vw, 10px) clamp(10px, 0.94vw, 16px) !important;
   font-weight: 700 !important;
-  box-shadow: 0 6px 16px rgba(201, 162, 39, 0.35) !important;
 }
 .nav-cta.active {
   background: linear-gradient(135deg, var(--gold), #b3831f) !important;
@@ -1751,6 +1749,7 @@ select {
   font-size: 14.5px;
   color: var(--white);
   caret-color: var(--white);
+  border: 0.5px solid var(--gold-soft);
 }
 select {
   color: var(--white);
@@ -1764,6 +1763,7 @@ select {
   background-position: right 14px center;
   background-size: 12px;
   cursor: pointer;
+  border: 0.5px solid var(--gold-soft);
 }
 select option {
   color: #000;
@@ -1776,6 +1776,7 @@ textarea::placeholder {
 textarea {
   resize: vertical;
   min-height: 110px;
+  border: 0.5px solid var(--gold-soft);
 }
 .field {
   display: flex;
