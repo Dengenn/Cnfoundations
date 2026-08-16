@@ -1100,6 +1100,24 @@ section.on-maroon .section-head p {
   gap: 56px;
   align-items: start;
 }
+/* Decorative botanical frame around the founder portrait -- lives on a
+   sibling <img>, not inside .portrait, so it is free to bleed past the
+   photo's own rounded/clipped edges (.portrait keeps overflow:hidden
+   for the photo itself; .portrait-frame does not). */
+.portrait-frame {
+  position: relative;
+}
+.frame-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 122%;
+  height: 122%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
 .portrait {
   aspect-ratio: 4/5;
   border-radius: 16px;
@@ -1787,17 +1805,61 @@ textarea {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 42px;
 }
+/* Ways-to-support chip: outer .support-chip is a plain flex/position
+   wrapper (no visual styling of its own, so its box always matches
+   .chip-body's size 1:1 -- nothing about the card's own footprint
+   changes). .chip-body carries the original padding/radius/glass
+   look plus a smooth scalloped notch cut with an SVG bezier path
+   (a plain circular mask leaves a visible kink where the arc meets
+   the flat top edge -- this path has a zero-slope handoff on both
+   sides plus a flat valley floor, so the whole dip is one continuous
+   curve). .chip-ico is a sibling badge that floats above the notch
+   via absolute positioning, so it adds zero height to the card or
+   the row. */
 .support-chip {
-  border-radius: 12px;
-  padding: 14px 16px;
+  position: relative;
   flex: 1;
   min-width: 150px;
+}
+.chip-ico {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -75%);
+  border-radius: 50%;
+  background: var(--maroon-deep);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  z-index: 3;
+}
+.chip-ico svg {
+  width: 19px;
+  height: 19px;
+}
+.chip-body {
+  border-radius: 12px;
+  padding: 14px 16px;
+  height: 100%;
   font-size: 13.5px;
   color: #e3cfc9;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20140'%20preserveAspectRatio='none'%3E%3Cpath%20fill='%23fff'%20d='M0,0H90C102,0,106,16,120,16C134,16,138,0,150,0H240V140H0Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20140'%20preserveAspectRatio='none'%3E%3Cpath%20fill='%23fff'%20d='M0,0H90C102,0,106,16,120,16C134,16,138,0,150,0H240V140H0Z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: top center;
+  mask-position: top center;
 }
-.support-chip b {
+.chip-body b {
   display: block;
   font-family: "Fraunces", serif;
   font-size: 16px;
