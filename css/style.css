@@ -543,6 +543,43 @@ nav.links a.active {
   color: var(--white);
   transform: translateY(-1px);
 }
+/* Shine sweep on hover -- scoped to .btn (primary/ghost) and .btn-view only,
+   so nav/header/footer controls (which use their own classes, not .btn)
+   are untouched. ::after carries the light band; overflow:hidden on the
+   button (already has its own border-radius) clips it to the pill shape. */
+.btn,
+.btn-view {
+  position: relative;
+  overflow: hidden;
+}
+.btn::after,
+.btn-view::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+.btn:hover::after,
+.btn-view:hover::after {
+  left: 130%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn::after,
+  .btn-view::after {
+    display: none;
+  }
+}
 
 /* =========================================================
    SECTIONS generic
@@ -1803,25 +1840,38 @@ textarea {
 }
 .support-row {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 42px;
   margin-top: 42px;
 }
 /* Ways-to-support chip: outer .support-chip is a plain flex/position
    wrapper (no visual styling of its own, so its box always matches
    .chip-body's size 1:1 -- nothing about the card's own footprint
    changes). .chip-body carries the original padding/radius/glass
-   look plus a smooth scalloped notch cut with an SVG bezier path
-   (a plain circular mask leaves a visible kink where the arc meets
-   the flat top edge -- this path has a zero-slope handoff on both
-   sides plus a flat valley floor, so the whole dip is one continuous
-   curve). .chip-ico is a sibling badge that floats above the notch
-   via absolute positioning, so it adds zero height to the card or
-   the row. */
+   look plus a smooth scalloped notch cut with a densely-sampled
+   clip-path polygon (a plain circular mask/clip leaves a visible kink
+   where the arc meets the flat top edge -- this polygon traces a
+   zero-slope bezier valley instead, so the whole dip reads as one
+   continuous curve). Percentage coordinates mean the same shape scales
+   correctly to each chip's own size, including the wide Partner card
+   when it wraps to its own row. clip-path is used instead of
+   mask-image because it composites more reliably with the chip's
+   backdrop-filter blur. row-gap is large enough that a wrapped chip's
+   badge never crosses into the row above it. .chip-ico is a sibling
+   badge that floats above the notch via absolute positioning, so it
+   adds zero height to the card or the row. */
 .support-chip {
   position: relative;
   flex: 1;
   min-width: 150px;
+  /* Flex column (rather than height:100% on .chip-body) so the glass
+     card reliably fills the row's stretched height -- percentage height
+     against an auto-sized flex item is the kind of thing that quietly
+     breaks the clip-path calc below in some engines; flex-grow doesn't
+     have that ambiguity. */
+  display: flex;
+  flex-direction: column;
 }
 .chip-ico {
   position: absolute;
@@ -1847,17 +1897,11 @@ textarea {
 .chip-body {
   border-radius: 12px;
   padding: 14px 16px;
-  height: 100%;
+  flex: 1;
   font-size: 13.5px;
   color: #e3cfc9;
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20140'%20preserveAspectRatio='none'%3E%3Cpath%20fill='%23fff'%20d='M0,0H90C102,0,106,16,120,16C134,16,138,0,150,0H240V140H0Z'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%20140'%20preserveAspectRatio='none'%3E%3Cpath%20fill='%23fff'%20d='M0,0H90C102,0,106,16,120,16C134,16,138,0,150,0H240V140H0Z'/%3E%3C/svg%3E");
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: top center;
-  mask-position: top center;
+  -webkit-clip-path: polygon(0.00% 0.00%, 37.50% 0.00%, 39.05% 0.39%, 40.42% 1.44%, 41.67% 2.96%, 42.85% 4.77%, 44.03% 6.66%, 45.28% 8.47%, 46.65% 9.99%, 48.20% 11.04%, 50.00% 11.43%, 51.80% 11.04%, 53.35% 9.99%, 54.72% 8.47%, 55.97% 6.66%, 57.15% 4.77%, 58.33% 2.96%, 59.58% 1.44%, 60.95% 0.39%, 62.50% 0.00%, 100.00% 0.00%, 100.00% 100.00%, 0.00% 100.00%);
+  clip-path: polygon(0.00% 0.00%, 37.50% 0.00%, 39.05% 0.39%, 40.42% 1.44%, 41.67% 2.96%, 42.85% 4.77%, 44.03% 6.66%, 45.28% 8.47%, 46.65% 9.99%, 48.20% 11.04%, 50.00% 11.43%, 51.80% 11.04%, 53.35% 9.99%, 54.72% 8.47%, 55.97% 6.66%, 57.15% 4.77%, 58.33% 2.96%, 59.58% 1.44%, 60.95% 0.39%, 62.50% 0.00%, 100.00% 0.00%, 100.00% 100.00%, 0.00% 100.00%);
 }
 .chip-body b {
   display: block;
@@ -2078,12 +2122,17 @@ footer .bottom {
 .modal-overlay.open .modal-panel {
   transform: translateY(0);
 }
+/* Lives inside .modal-panel (not fixed to the viewport) so it sits neatly
+   inside the card itself and scrolls away with the rest of the panel's
+   content on long write-ups, instead of floating disconnected in the
+   corner of the screen. .modal-panel already has position:relative. */
 .modal-close {
-  position: fixed;
-  top: 20px;
-  right: 20px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
   width: 36px;
   height: 36px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -2093,7 +2142,7 @@ footer .bottom {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
+  z-index: 5;
 }
 .modal-close:hover {
   background: rgba(255, 255, 255, 0.2);
