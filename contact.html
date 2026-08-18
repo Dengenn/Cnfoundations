@@ -132,16 +132,34 @@
                 </div>
               </div>
             </div>
-            <div class="map-slot">
-              <iframe
-                title="Obehie, Ukwa West LGA - Google Map"
-                src="https://www.google.com/maps?q=Obehie,+Ukwa+West+LGA,+Abia+State,+Nigeria&output=embed"
-                width="100%"
-                height="100%"
-                style="border: 0"
-                allowfullscreen=""
-                loading="lazy"
-              ></iframe>
+            <div
+              class="map-slot"
+              id="mapEmbed"
+              data-map-title="Obehie, Ukwa West LGA - Google Map"
+              data-map-src="https://www.google.com/maps?q=Obehie,+Ukwa+West+LGA,+Abia+State,+Nigeria&output=embed"
+            >
+              <div class="map-slot__placeholder">
+                <svg
+                  class="map-slot__pin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z"
+                  />
+                  <circle cx="12" cy="9" r="2.6" />
+                </svg>
+                <p>
+                  This map is provided by Google Maps and sets its own
+                  cookies once loaded.
+                </p>
+                <button type="button" class="btn-view" id="mapLoadBtn">
+                  Load Map
+                </button>
+              </div>
             </div>
           </div>
           <div data-reveal>
@@ -277,10 +295,12 @@
             >Content compiled from public sources &mdash; verify before
             publishing.</span
           >
+          <span><a href="privacy.html">Privacy Policy</a></span>
         </div>
       </div>
     </footer>
     <script src="js/main.js"></script>
+    <script src="js/cookies.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var form = document.getElementById("contactForm");

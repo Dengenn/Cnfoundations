@@ -2105,6 +2105,8 @@ footer .bottom {
   max-width: 860px;
   width: 100%;
   max-height: 92vh;
+  overflow-y: auto;
+  padding: 40px;
   border-radius: 24px;
   position: relative;
   transform: translateY(14px);
@@ -2116,30 +2118,6 @@ footer .bottom {
   );
   border: 1px solid rgba(201, 162, 39, 0.35);
   box-shadow: 0 34px 70px rgba(0, 0, 0, 0.45);
-  /* The panel itself no longer scrolls -- .modal-scroll (inner wrapper)
-     does. This keeps .modal-close pinned to the panel's corner instead
-     of travelling with the write-up content as it scrolls. overflow:
-     hidden lets the flex column clip cleanly to the panel's own rounded
-     corners. */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-/* Scrollable body: everything except the close button. flex:1 + min-height:0
-   lets this shrink to the space remaining inside .modal-panel's max-height
-   instead of pushing the panel taller than its cap. Scrollbar is hidden
-   across engines (WebKit/Blink, Gecko, legacy Trident/EdgeHTML) -- same
-   treatment already used for the mobile nav drawer above. */
-.modal-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 40px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.modal-scroll::-webkit-scrollbar {
-  display: none;
 }
 .modal-overlay.open .modal-panel {
   transform: translateY(0);
@@ -2241,5 +2219,244 @@ footer .bottom {
 @media (max-width: 700px) {
   .stats-row {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================================================
+   Click-to-load map placeholder (contact.html)
+   Keeps the Google Maps iframe out of the DOM -- and its cookies
+   off the device -- until the visitor explicitly asks for it via
+   js/cookies.js, or has already chosen "Accept All" cookies.
+   ========================================================= */
+.map-slot {
+  overflow: hidden;
+}
+.map-slot__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.map-slot__pin {
+  width: 26px;
+  height: 26px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+.map-slot__placeholder p {
+  max-width: 230px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================================
+   Cookie consent banner (js/cookies.js)
+   Fixed toast at the bottom of the viewport; opt-in only, no
+   default action is ever taken on the visitor's behalf. Reuses
+   .btn / .btn-primary / .btn-view so it inherits the same shine
+   hover and reduced-motion handling as the rest of the site.
+   ========================================================= */
+.cookie-banner {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 500;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: linear-gradient(
+    165deg,
+    rgba(74, 17, 27, 0.97),
+    rgba(23, 5, 10, 0.98)
+  );
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  pointer-events: none;
+}
+.cookie-banner.in {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.cookie-banner__body {
+  flex: 1 1 320px;
+}
+.cookie-banner__body p {
+  color: #e3cfc9;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.cookie-banner__body a {
+  color: var(--gold-soft);
+  text-decoration: underline;
+}
+.cookie-banner__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+.cookie-banner .btn-view {
+  color: var(--cream);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.cookie-banner .btn-view:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--white);
+}
+.cookie-banner .btn-primary {
+  padding: 12px 20px;
+  font-size: 13.5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cookie-banner {
+    transition: none;
+  }
+}
+@media (max-width: 560px) {
+  .cookie-banner {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 18px 20px;
+  }
+  .cookie-banner__actions {
+    width: 100%;
+  }
+  .cookie-banner__actions .btn-view,
+  .cookie-banner__actions .btn-primary {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   Legal content (privacy.html)
+   Narrower reading column than the site's default 1180px .wrap,
+   plus baseline type rules for the headings/lists/table a policy
+   document needs that no other page on the site uses.
+   ========================================================= */
+.legal-content {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.legal-updated {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  color: var(--maroon-soft);
+  margin-bottom: 30px;
+}
+.legal-toc {
+  border: 1.5px dashed var(--maroon-soft);
+  background: rgba(174, 62, 78, 0.08);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin-bottom: 46px;
+}
+.legal-toc p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  margin-bottom: 12px;
+}
+.legal-toc ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+}
+.legal-toc a {
+  font-size: 14px;
+  color: #5a3121;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.legal-toc a:hover {
+  border-color: var(--maroon-soft);
+}
+.legal-section {
+  margin-bottom: 44px;
+  scroll-margin-top: 110px;
+}
+.legal-section h2 {
+  font-size: 23px;
+  margin-bottom: 14px;
+}
+.legal-section h3 {
+  font-size: 17px;
+  margin: 20px 0 8px;
+  color: var(--maroon);
+}
+.legal-section p {
+  font-size: 15.5px;
+  color: #3a3128;
+  margin-bottom: 14px;
+}
+.legal-section ul,
+.legal-section ol {
+  padding-left: 22px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.legal-section li {
+  font-size: 15px;
+  color: #3a3128;
+}
+.legal-table-wrap {
+  overflow-x: auto;
+  margin: 18px 0 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(122, 27, 43, 0.14);
+}
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 560px;
+}
+.legal-table th,
+.legal-table td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(122, 27, 43, 0.1);
+  vertical-align: top;
+}
+.legal-table th {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  background: rgba(201, 162, 39, 0.1);
+}
+.legal-table tr:last-child td {
+  border-bottom: none;
+}
+.legal-manage {
+  margin-top: 10px;
+}
+@media (max-width: 640px) {
+  .legal-toc ol {
+    grid-template-columns: 1fr;
   }
 }
