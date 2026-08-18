@@ -2026,6 +2026,10 @@ footer .bottom {
   }
 }
 
+footer .bottom a[href="privacy.html"] {
+  color: var(--gold-soft);
+}
+
 ::selection {
   background: var(--gold-soft);
   color: var(--maroon-deep);
