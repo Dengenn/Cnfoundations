@@ -9,9 +9,17 @@ window.SiteDetails = window.SiteDetails || {};
   var photoSlotSvg =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg>';
 
+  function escapeAttr(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
   function photoSlotsHTML(photos) {
     return photos
-      .map(function (photo) {
+      .map(function (photo, index) {
         var caption =
           typeof photo === "string"
             ? photo
@@ -33,9 +41,17 @@ window.SiteDetails = window.SiteDetails || {};
         }
         return (
           '<div class="photo-card">' +
-          '<div class="photo-card__image" style="background-image:url(' +
-          photo.url +
-          ');"></div>' +
+          '<button type="button" class="photo-card__image" data-full-image="' +
+          escapeAttr(photo.url) +
+          '" data-image-index="' +
+          index +
+          '" data-caption="' +
+          escapeAttr(caption) +
+          '" aria-label="Open image: ' +
+          escapeAttr(caption) +
+          '" style="background-image:url(\'' +
+          escapeAttr(photo.url) +
+          "');\"></button>" +
           '<div class="photo-card__caption">' +
           caption +
           "</div>" +
@@ -68,6 +84,101 @@ window.SiteDetails = window.SiteDetails || {};
     var modalWriteup = document.getElementById("modalWriteup");
     var modalSource = document.getElementById("modalSource");
     var modalClose = document.getElementById("modalClose");
+    var viewerScale = 1;
+    var viewerImages = [];
+    var viewerIndex = 0;
+    var imageViewer = document.createElement("div");
+    imageViewer.className = "image-viewer";
+    imageViewer.innerHTML =
+      '<div class="image-viewer__panel" role="dialog" aria-modal="true" aria-label="Full image view">' +
+      '<button type="button" class="image-viewer__close" aria-label="Close full image">&times;</button>' +
+      '<button type="button" class="image-viewer__nav image-viewer__nav--prev" data-viewer-nav="prev" aria-label="Previous image">&lsaquo;</button>' +
+      '<button type="button" class="image-viewer__nav image-viewer__nav--next" data-viewer-nav="next" aria-label="Next image">&rsaquo;</button>' +
+      '<div class="image-viewer__canvas"><img alt="" /></div>' +
+      '<div class="image-viewer__bar">' +
+      '<span class="image-viewer__caption"></span>' +
+      '<div class="image-viewer__controls">' +
+      '<button type="button" data-zoom="out" aria-label="Zoom out">-</button>' +
+      '<button type="button" data-zoom="reset" aria-label="Reset zoom">100%</button>' +
+      '<button type="button" data-zoom="in" aria-label="Zoom in">+</button>' +
+      "</div>" +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(imageViewer);
+    var viewerImg = imageViewer.querySelector("img");
+    var viewerCaption = imageViewer.querySelector(".image-viewer__caption");
+
+    function galleryImages() {
+      return Array.prototype.slice
+        .call(modalGallery.querySelectorAll("[data-full-image]"))
+        .map(function (el) {
+          return {
+            src: el.getAttribute("data-full-image"),
+            caption: el.getAttribute("data-caption") || "",
+          };
+        });
+    }
+
+    function paintViewerZoom() {
+      viewerImg.style.transform = "scale(" + viewerScale + ")";
+    }
+
+    function showViewerImage(index) {
+      if (!viewerImages.length) return;
+      viewerScale = 1;
+      viewerIndex = (index + viewerImages.length) % viewerImages.length;
+      var image = viewerImages[viewerIndex];
+      viewerImg.src = image.src;
+      viewerImg.alt = image.caption || "Full image view";
+      viewerCaption.textContent = image.caption || "";
+      paintViewerZoom();
+    }
+
+    function openImageViewer(index) {
+      viewerImages = galleryImages();
+      showViewerImage(index);
+      imageViewer.classList.add("open");
+    }
+
+    function closeImageViewer() {
+      imageViewer.classList.remove("open");
+      viewerImg.removeAttribute("src");
+    }
+
+    imageViewer.addEventListener("click", function (e) {
+      if (
+        e.target === imageViewer ||
+        e.target.closest(".image-viewer__close")
+      ) {
+        closeImageViewer();
+        return;
+      }
+      var zoom = e.target.closest("[data-zoom]");
+      if (!zoom) return;
+      var action = zoom.getAttribute("data-zoom");
+      if (action === "in") viewerScale = Math.min(4, viewerScale + 0.25);
+      if (action === "out") viewerScale = Math.max(0.5, viewerScale - 0.25);
+      if (action === "reset") viewerScale = 1;
+      paintViewerZoom();
+    });
+
+    imageViewer.addEventListener("click", function (e) {
+      var nav = e.target.closest("[data-viewer-nav]");
+      if (!nav) return;
+      var direction = nav.getAttribute("data-viewer-nav") === "next" ? 1 : -1;
+      showViewerImage(viewerIndex + direction);
+    });
+
+    imageViewer
+      .querySelector(".image-viewer__canvas")
+      .addEventListener("wheel", function (e) {
+        e.preventDefault();
+        viewerScale = Math.max(
+          0.5,
+          Math.min(4, viewerScale + (e.deltaY < 0 ? 0.15 : -0.15)),
+        );
+        paintViewerZoom();
+      });
 
     function openModal(id) {
       var d = window.SiteDetails[id];
@@ -90,6 +201,11 @@ window.SiteDetails = window.SiteDetails || {};
     }
 
     document.addEventListener("click", function (e) {
+      var fullImage = e.target.closest("[data-full-image]");
+      if (fullImage) {
+        openImageViewer(Number(fullImage.getAttribute("data-image-index")) || 0);
+        return;
+      }
       var btn = e.target.closest("[data-detail]");
       if (btn) {
         openModal(btn.getAttribute("data-detail"));
@@ -100,6 +216,17 @@ window.SiteDetails = window.SiteDetails || {};
       if (e.target === overlay) closeModal();
     });
     document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && imageViewer.classList.contains("open")) {
+        closeImageViewer();
+        return;
+      }
+      if (
+        imageViewer.classList.contains("open") &&
+        (e.key === "ArrowLeft" || e.key === "ArrowRight")
+      ) {
+        showViewerImage(viewerIndex + (e.key === "ArrowRight" ? 1 : -1));
+        return;
+      }
       if (e.key === "Escape") closeModal();
     });
   });

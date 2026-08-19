@@ -13,33 +13,33 @@
   var SLIDES = [
     {
       type: "image",
-      src: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1600&q=80",
+      src: "assets/img/facebook/agriculture-01.jpg",
       grad: "linear-gradient(135deg,#7A1B2B,#360C13)",
-      caption: "Photo: scholarship award ceremony",
+      caption: "Photo: award ceremony gathering",
     },
     {
       type: "image",
-      src: "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=1600&q=80",
+      src: "assets/img/facebook/posts/122216997410101895-01.jpg",
       grad: "linear-gradient(135deg,#AE3E4E,#7A1B2B)",
-      caption: "Photo: constituency office, Obehie",
+      caption: "Photo: appreciation visit",
     },
     {
       type: "image",
-      src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
+      src: "assets/img/facebook/posts/122093879390101895-01.jpg",
       grad: "linear-gradient(135deg,#C9A227,#7A1B2B)",
-      caption: "Photo: community empowerment event",
+      caption: "Photo: public gathering",
     },
     {
       type: "image",
-      src: "https://images.unsplash.com/photo-1496317899792-9d7dbcd928a1?auto=format&fit=crop&w=1600&q=80",
+      src: "assets/img/facebook/posts/122093312666101895-01.jpg",
       grad: "linear-gradient(135deg,#360C13,#AE3E4E)",
-      caption: "Photo: skills training beneficiaries",
+      caption: "Photo: community engagement",
     },
     {
       type: "image",
-      src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80",
+      src: "assets/img/facebook/posts/122180940326101895-01.jpg",
       grad: "linear-gradient(135deg,#7A1B2B,#C9A227)",
-      caption: "Photo: Ukwa community outreach",
+      caption: "Photo: delegation meeting",
     },
   ];
 

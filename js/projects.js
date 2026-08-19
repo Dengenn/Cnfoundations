@@ -11,12 +11,24 @@
         "Sponsored more than five undergraduate and postgraduate students to study abroad.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
-          caption: "Student departure / send-off",
+          url: "assets/img/facebook/education-05.jpg",
+          caption: "Overseas sponsorship beneficiary record",
         },
         {
-          url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80",
-          caption: "Certificate or graduation photo",
+          url: "assets/img/facebook/education-04.jpg",
+          caption: "Postgraduate scholarship beneficiaries",
+        },
+        {
+          url: "assets/img/facebook/education-01.jpg",
+          caption: "Education intervention beneficiary record",
+        },
+        {
+          url: "assets/img/facebook/education-02.jpg",
+          caption: "Education support documentation",
+        },
+        {
+          url: "assets/img/facebook/education-03.jpg",
+          caption: "Sponsorship payment record",
         },
       ],
       writeup: [
@@ -37,12 +49,24 @@
         "Granted scholarships to over 100 undergraduates from Ukwa East and Ukwa West in Nigerian universities.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80",
-          caption: "Campus photo of scholars",
+          url: "assets/img/facebook/education-04.jpg",
+          caption: "Tertiary scholarship beneficiaries",
         },
         {
-          url: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
-          caption: "Scholarship award ceremony",
+          url: "assets/img/facebook/education-05.jpg",
+          caption: "Scholarship and manpower development record",
+        },
+        {
+          url: "assets/img/facebook/education-01.jpg",
+          caption: "Education intervention beneficiary record",
+        },
+        {
+          url: "assets/img/facebook/education-02.jpg",
+          caption: "Undergraduate scholarship documentation",
+        },
+        {
+          url: "assets/img/facebook/education-03.jpg",
+          caption: "Scholarship payment record",
         },
       ],
       writeup: [
@@ -63,12 +87,24 @@
         "Granted scholarships to over 200 secondary school students, JSS1 through SS3.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
-          caption: "Classroom / beneficiaries photo",
+          url: "assets/img/facebook/education-01.jpg",
+          caption: "Secondary school bursary beneficiaries list",
         },
         {
-          url: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80",
-          caption: "Bursary cheque presentation",
+          url: "assets/img/facebook/education-02.jpg",
+          caption: "Secondary school bursary documentation",
+        },
+        {
+          url: "assets/img/facebook/education-03.jpg",
+          caption: "Bursary payment record",
+        },
+        {
+          url: "assets/img/facebook/education-04.jpg",
+          caption: "Scholarship beneficiary record",
+        },
+        {
+          url: "assets/img/facebook/education-05.jpg",
+          caption: "Education intervention summary",
         },
       ],
       writeup: [
@@ -89,12 +125,20 @@
         "Trained and equipped over 70 Ukwa youths with vocational skills for self-reliance.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
-          caption: "Vocational training session",
+          url: "assets/img/facebook/agriculture-01.jpg",
+          caption: "Young farmers training group",
         },
         {
-          url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-          caption: "Graduates with equipment/tools",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Empowerment intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "Empowerment materials and equipment",
+        },
+        {
+          url: "assets/img/facebook/posts/122177103500101895-01.jpg",
+          caption: "Special empowerment tour programme",
         },
       ],
       writeup: [
@@ -119,12 +163,20 @@
         "Provided electric transformers to communities to restore and improve power supply.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-          caption: "Transformer installation site",
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "Infrastructure and equipment intervention collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-          caption: "Community power restoration",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Community development intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Infrastructure project intervention",
+        },
+        {
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Constituency intervention documentation",
         },
       ],
       writeup: [
@@ -145,12 +197,20 @@
         "Sponsored academic quiz competitions among secondary school students.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80",
-          caption: "Quiz competition in progress",
+          url: "assets/img/facebook/education-01.jpg",
+          caption: "Education intervention beneficiaries",
         },
         {
-          url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-          caption: "Winners with prizes",
+          url: "assets/img/facebook/education-03.jpg",
+          caption: "Education support record",
+        },
+        {
+          url: "assets/img/facebook/education-04.jpg",
+          caption: "Education beneficiary record",
+        },
+        {
+          url: "assets/img/facebook/education-05.jpg",
+          caption: "Education intervention summary",
         },
       ],
       writeup: [
@@ -171,12 +231,20 @@
         "Provided financial support to churches and communities for local development projects.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1200&q=80",
-          caption: "Community project handover",
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Community project handover collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1200&q=80",
-          caption: "Church/community facility",
+          url: "assets/img/facebook/projects-03.jpg",
+          caption: "Community support and beneficiary collage",
+        },
+        {
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Community infrastructure support",
+        },
+        {
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Community development intervention collage",
         },
       ],
       writeup: [
@@ -197,12 +265,20 @@
         "In 2011, sponsored seven players and a management representative for an overseas training tour to Portugal.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80",
-          caption: "Team training session",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Youth and community intervention collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf?auto=format&fit=crop&w=1200&q=80",
-          caption: "Squad departure photo",
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "Youth support intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Youth and leadership support documentation",
+        },
+        {
+          url: "assets/img/facebook/projects-03.jpg",
+          caption: "Youth beneficiary support collage",
         },
       ],
       writeup: [
@@ -223,12 +299,20 @@
         "Offered free medical treatment, both locally and abroad, to many families in need.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1200&q=80",
-          caption: "Medical outreach / clinic",
+          url: "assets/img/facebook/projects-03.jpg",
+          caption: "Beneficiary support collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&w=1200&q=80",
-          caption: "Patient support photo",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Human development intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Humanitarian support documentation",
+        },
+        {
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Constituency support intervention",
         },
       ],
       writeup: [
@@ -252,12 +336,16 @@
       summary: "Rehabilitated failed portions of the Obehie to Azumini road.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
-          caption: "Road before rehabilitation",
+          url: "assets/img/facebook/road-01.jpg",
+          caption: "Ohanso - Obunku - Obohia road rehabilitation",
         },
         {
-          url: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
-          caption: "Road after rehabilitation",
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Constituency infrastructure intervention",
+        },
+        {
+          url: "assets/img/facebook/posts/122130088094101895-01.jpg",
+          caption: "Owaza oil and gas skill acquisition centre appeal",
         },
       ],
       writeup: [
@@ -278,12 +366,16 @@
         "Donated complete band instrument sets to primary schools in Ukwa East and Ukwa West.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80",
-          caption: "School band performance",
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "School equipment support collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1200&q=80",
-          caption: "Instrument handover",
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Education and community support collage",
+        },
+        {
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "School and community support intervention",
         },
       ],
       writeup: [
@@ -304,12 +396,20 @@
         "Supported the rehabilitation of physically challenged persons across Ukwa land.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&q=80",
-          caption: "Support / rehabilitation session",
+          url: "assets/img/facebook/projects-03.jpg",
+          caption: "Beneficiary support collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
-          caption: "Beneficiary photo",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Rehabilitation and empowerment intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Beneficiary assistance documentation",
+        },
+        {
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Support intervention record",
         },
       ],
       writeup: [
@@ -330,12 +430,20 @@
         "Yearly distribution of food and essential items to less-privileged persons and widows in Ukwa East.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80",
-          caption: "Distribution event",
+          url: "assets/img/facebook/projects-03.jpg",
+          caption: "Community beneficiary support collage",
         },
         {
-          url: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1200&q=80",
-          caption: "Beneficiaries with food items",
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Community outreach intervention collage",
+        },
+        {
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "Community empowerment materials",
+        },
+        {
+          url: "assets/img/facebook/projects-02.jpg",
+          caption: "Community development documentation",
         },
       ],
       writeup: [
@@ -356,12 +464,20 @@
         "Trained and granted start-up funds to selected youths across all 17 LGAs of Abia State.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1496317899792-9d7dbcd928a1?auto=format&fit=crop&w=1200&q=80",
-          caption: "Training session",
+          url: "assets/img/facebook/agriculture-01.jpg",
+          caption: "Training beneficiaries",
         },
         {
-          url: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
-          caption: "Grant / equipment handover",
+          url: "assets/img/facebook/projects-01.jpg",
+          caption: "Empowerment equipment support collage",
+        },
+        {
+          url: "assets/img/facebook/projects-05.jpg",
+          caption: "Empowerment intervention collage",
+        },
+        {
+          url: "assets/img/facebook/posts/122177103500101895-01.jpg",
+          caption: "Ukwa East and West empowerment tour programme",
         },
       ],
       writeup: [
@@ -382,12 +498,20 @@
         "Commissioned a constituency office at Obehie, Ukwa West LGA, and awarded bursaries to 200 students.",
       photos: [
         {
-          url: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=1200&q=80",
-          caption: "Office commissioning ceremony",
+          url: "assets/img/facebook/projects-04.jpg",
+          caption: "Constituency office and project intervention",
         },
         {
-          url: "https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=1200&q=80",
-          caption: "Bursary award event",
+          url: "assets/img/facebook/education-01.jpg",
+          caption: "Bursary award beneficiaries list",
+        },
+        {
+          url: "assets/img/facebook/education-02.jpg",
+          caption: "Bursary beneficiary documentation",
+        },
+        {
+          url: "assets/img/facebook/education-03.jpg",
+          caption: "Bursary payment record",
         },
       ],
       writeup: [
