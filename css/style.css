@@ -2109,8 +2109,6 @@ footer .bottom a[href="privacy.html"] {
   max-width: 860px;
   width: 100%;
   max-height: 92vh;
-  overflow-y: auto;
-  padding: 40px;
   border-radius: 24px;
   position: relative;
   transform: translateY(14px);
@@ -2122,14 +2120,29 @@ footer .bottom a[href="privacy.html"] {
   );
   border: 1px solid rgba(201, 162, 39, 0.35);
   box-shadow: 0 34px 70px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* Scrolls independently of .modal-panel so long write-ups never drag
+   .modal-close out of view -- see the note on .modal-close below. */
+.modal-scroll {
+  overflow-y: auto;
+  padding: 40px;
+  min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-scroll::-webkit-scrollbar {
+  display: none;
 }
 .modal-overlay.open .modal-panel {
   transform: translateY(0);
 }
-/* Lives inside .modal-panel (not fixed to the viewport) so it sits neatly
-   inside the card itself and scrolls away with the rest of the panel's
-   content on long write-ups, instead of floating disconnected in the
-   corner of the screen. .modal-panel already has position:relative. */
+/* Positioned against .modal-panel, NOT .modal-scroll -- it sits outside
+   the scrolling wrapper, so it stays pinned in the corner of the card and
+   never scrolls away, even on long write-ups. .modal-panel already has
+   position:relative. */
 .modal-close {
   position: absolute;
   top: 16px;
