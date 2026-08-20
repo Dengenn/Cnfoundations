@@ -1151,6 +1151,7 @@ section.on-maroon .section-head p {
   width: 122%;
   height: 122%;
   max-width: none;
+  object-fit: contain;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
@@ -1584,81 +1585,125 @@ section.on-maroon .section-head p {
    SCHOLARSHIPS
    ========================================================= */
 .schol-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-  margin-bottom: 36px;
   position: relative;
   z-index: 2;
+  margin-bottom: 36px;
 }
 .schol-card {
-  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  border-radius: 20px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  min-height: 420px;
 }
-.schol-cover {
-  height: 190px;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 20px 24px;
-}
-.schol-cover .n {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 36px;
-  color: rgba(255, 255, 255, 0.88);
-  position: absolute;
-  top: 18px;
-  right: 18px;
-}
-.schol-cover h3 {
-  color: var(--white);
-  font-size: 20px;
-  position: relative;
-  z-index: 2;
-}
-.schol-cover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.08) 0 8px,
-    transparent 8px 20px
-  );
-}
-.cov-1 {
-  background: linear-gradient(135deg, var(--maroon), var(--maroon-deep));
-}
-.cov-2 {
-  background: linear-gradient(135deg, var(--gold), var(--maroon));
-}
-.cov-3 {
-  background: linear-gradient(135deg, var(--maroon-soft), var(--maroon-deep));
-}
-.schol-body {
-  padding: 24px 26px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  flex: 1;
-}
-.schol-body ul {
-  padding-left: 18px;
-  font-size: 14px;
-  color: #4a3f34;
+.schol-info {
+  padding: 34px 36px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.schol-body .btn-view {
-  align-self: flex-start;
-  margin-top: auto;
+.schol-info > .eyebrow {
+  margin-bottom: 2px;
 }
-@media (max-width: 900px) {
-  .schol-grid {
+.schol-info > h3 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+.schol-info .btn-view {
+  align-self: flex-start;
+  margin-top: 18px;
+}
+.schol-tier {
+  padding: 16px 0;
+  border-top: 1px solid rgba(122, 27, 43, 0.14);
+}
+.schol-tier:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.schol-tier-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.schol-tier-head .n {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--maroon-soft);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+.schol-tier-head h4 {
+  font-size: 17px;
+  margin-top: 2px;
+}
+.schol-tier ul {
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: #4a3f34;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.schol-preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1.2fr 1fr 1fr;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(122, 27, 43, 0.05);
+  cursor: pointer;
+}
+.schol-thumb {
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(122, 27, 43, 0.12);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(54, 12, 19, 0.14);
+  transition: transform 0.2s ease;
+}
+.schol-thumb:first-child {
+  grid-column: 1 / -1;
+}
+.schol-preview:hover .schol-thumb {
+  transform: scale(1.02);
+}
+.schol-thumb--more::after {
+  content: attr(data-more);
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 5, 9, 0.58);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 19px;
+  font-weight: 600;
+}
+@media (max-width: 860px) {
+  .schol-card {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .schol-preview {
+    min-height: 260px;
+  }
+}
+@media (max-width: 520px) {
+  .schol-info {
+    padding: 26px;
+  }
+  .schol-preview {
+    padding: 12px;
+    min-height: 220px;
   }
 }
 

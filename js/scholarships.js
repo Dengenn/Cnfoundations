@@ -143,28 +143,76 @@
     };
   });
 
+  // Combined entry: the three tiers share the same gallery and are close
+  // enough in nature that one modal covering all of them (rather than
+  // three separate "View Details" popups repeating similar images) reads
+  // better on the page. Writeups are concatenated with a bold tier label
+  // ahead of each tier's first paragraph; sources are merged and deduped
+  // by URL since several tiers cite the same articles.
+  var combinedPhotos = [];
+  var combinedWriteup = [];
+  var combinedSources = [];
+  var seenSourceUrls = {};
+  SCHOLARSHIPS.forEach(function (s) {
+    combinedPhotos = combinedPhotos.concat(s.photos);
+    s.writeup.forEach(function (p, i) {
+      combinedWriteup.push(
+        i === 0 ? "<strong>" + s.title + ".</strong> " + p : p,
+      );
+    });
+    s.sources.forEach(function (src) {
+      if (!seenSourceUrls[src.url]) {
+        seenSourceUrls[src.url] = true;
+        combinedSources.push(src);
+      }
+    });
+  });
+  window.SiteDetails["scholarships-all"] = {
+    tag: "Three Tiers of Support",
+    title: "Scholarship Programmes",
+    photos: combinedPhotos,
+    writeup: combinedWriteup,
+    sources: combinedSources,
+  };
+
   var grid = document.getElementById("scholGrid");
   if (grid) {
-    SCHOLARSHIPS.forEach(function (s) {
-      var coverStyle = s.coverImage
-        ? ' style="background-image:url(' +
-          s.coverImage +
-          '); background-size:cover; background-position:center;"'
-        : "";
-      var el = document.createElement("div");
-      el.className = "schol-card glass";
-      el.setAttribute("data-reveal", "");
-      el.innerHTML =
-        '<div class="schol-cover ' +
-        s.cover +
-        '"' +
-        coverStyle +
-        '><div class="n">' +
+    var shown = combinedPhotos.slice(0, 5);
+    var extra = combinedPhotos.length - shown.length;
+    var thumbsHTML = shown
+      .map(function (p, idx) {
+        var url = (p && p.url) || "";
+        var isLast = idx === shown.length - 1 && extra > 0;
+        var cls = "schol-thumb" + (isLast ? " schol-thumb--more" : "");
+        var moreAttr = isLast ? ' data-more="+' + extra + '"' : "";
+        return (
+          '<div class="' +
+          cls +
+          '" style="background-image:url(' +
+          url +
+          ')"' +
+          moreAttr +
+          "></div>"
+        );
+      })
+      .join("");
+
+    var tiersHTML = SCHOLARSHIPS.map(function (s) {
+      return (
+        '<div class="schol-tier">' +
+        '<div class="schol-tier-head">' +
+        '<span class="n">' +
         s.n +
-        "</div><h3>" +
+        "</span>" +
+        "<div>" +
+        '<span class="eyebrow">' +
+        s.tag +
+        "</span>" +
+        "<h4>" +
         s.title +
-        "</h3></div>" +
-        '<div class="schol-body">' +
+        "</h4>" +
+        "</div>" +
+        "</div>" +
         "<ul>" +
         s.bullets
           .map(function (b) {
@@ -172,12 +220,24 @@
           })
           .join("") +
         "</ul>" +
-        '<button class="btn-view" data-detail="' +
-        s.id +
-        '">View Details</button>' +
-        "</div>";
-      grid.appendChild(el);
-    });
+        "</div>"
+      );
+    }).join("");
+
+    var el = document.createElement("div");
+    el.className = "schol-card glass";
+    el.setAttribute("data-reveal", "");
+    el.innerHTML =
+      '<div class="schol-info">' +
+      '<span class="eyebrow">Invest in Potential</span>' +
+      "<h3>Three Tiers of Educational Support</h3>" +
+      tiersHTML +
+      '<button class="btn-view" data-detail="scholarships-all">View Details</button>' +
+      "</div>" +
+      '<div class="schol-preview" data-detail="scholarships-all">' +
+      thumbsHTML +
+      "</div>";
+    grid.appendChild(el);
 
     if ("IntersectionObserver" in window) {
       var obs = new IntersectionObserver(
