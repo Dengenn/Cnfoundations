@@ -1616,19 +1616,19 @@ section.on-maroon .section-head p {
   align-self: flex-start;
   margin-top: 18px;
 }
-.schol-tier {
-  padding: 16px 0;
-  border-top: 1px solid rgba(122, 27, 43, 0.14);
+.schol-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
-.schol-tier:first-of-type {
-  border-top: none;
-  padding-top: 0;
+.schol-tier {
+  padding: 0;
 }
 .schol-tier-head {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .schol-tier-head .n {
   font-family: "IBM Plex Mono", monospace;
@@ -1645,11 +1645,11 @@ section.on-maroon .section-head p {
 }
 .schol-tier ul {
   padding-left: 18px;
-  font-size: 13.5px;
+  font-size: 14.5px;
   color: #4a3f34;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 .schol-preview {
   position: relative;

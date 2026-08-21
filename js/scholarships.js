@@ -231,7 +231,9 @@
       '<div class="schol-info">' +
       '<span class="eyebrow">Invest in Potential</span>' +
       "<h3>Three Tiers of Educational Support</h3>" +
+      '<div class="schol-tiers">' +
       tiersHTML +
+      "</div>" +
       '<button class="btn-view" data-detail="scholarships-all">View Details</button>' +
       "</div>" +
       '<div class="schol-preview" data-detail="scholarships-all">' +
