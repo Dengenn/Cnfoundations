@@ -510,6 +510,8 @@ nav.links a.active {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 26px rgba(122, 27, 43, 0.38);
+  background: rgba(122, 27, 43, 0.5);
+
 }
 .btn-ghost {
   border: 1.5px solid var(--maroon);
@@ -518,7 +520,8 @@ nav.links a.active {
   backdrop-filter: blur(8px);
 }
 .btn-ghost:hover {
-  background: rgba(122, 27, 43, 0.08);
+  background: rgba(122, 27, 43, 0.1);
+  color: white;
 }
 .btn-view {
   font-family: "IBM Plex Mono", monospace;
