@@ -1,13 +1,31 @@
 # Operating system files
 .DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
+ehthumbs.db
 desktop.ini
 
-# VS Code files
+# Editor / IDE files
 .vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
 
 # Node artifacts
 node_modules/
+
+# Python artifacts (used by local tooling for CSS/asset validation)
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
 
 # Build or distribution folders
 dist/
@@ -22,6 +40,9 @@ yarn-error.log*
 *.bak
 *.tmp
 *.swp
+
+# Packaged deliverables (zipped drop-in exports, not source)
+*.zip
 
 # Other generated files
 *.log

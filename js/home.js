@@ -198,4 +198,46 @@
   } else if (deck) {
     deck.classList.add("in");
   }
+
+  /* ---------------- Scroll-morph divider (stack -> plant section) ----
+     Writes a 0-1 progress value to --morph on #sectionMorph as the
+     divider travels through the lower-middle of the viewport; the two
+     wave shapes in index.html cross-fade/shift purely via that CSS
+     variable (see .section-morph in style.css). For
+     prefers-reduced-motion, skip the scroll tracking entirely and just
+     settle on the fully-morphed "soil" state. -------------------- */
+  var morphEl = document.getElementById("sectionMorph");
+  if (morphEl) {
+    var morphReduceMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (morphReduceMotion) {
+      morphEl.style.setProperty("--morph", "1");
+    } else {
+      var morphTicking = false;
+
+      function paintMorph() {
+        morphTicking = false;
+        var rect = morphEl.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var start = vh * 0.85;
+        var end = vh * 0.25;
+        var progress = (start - rect.top) / (start - end);
+        if (progress < 0) progress = 0;
+        if (progress > 1) progress = 1;
+        morphEl.style.setProperty("--morph", progress.toFixed(3));
+      }
+
+      function requestMorphPaint() {
+        if (morphTicking) return;
+        morphTicking = true;
+        requestAnimationFrame(paintMorph);
+      }
+
+      window.addEventListener("scroll", requestMorphPaint, { passive: true });
+      window.addEventListener("resize", requestMorphPaint, { passive: true });
+      paintMorph();
+    }
+  }
 })();

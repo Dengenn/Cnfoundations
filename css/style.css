@@ -3029,3 +3029,307 @@ footer .bottom a[href="privacy.html"] {
     transition: none;
   }
 }
+
+/* =========================================================
+   HOME — Scroll-morph divider (card-stack -> plant-growth)
+   Sits between .stack-section and .seeds-section, both of which
+   share the same light "cloth" background, so a plain .thread
+   (built for light/dark seams -- see the .thread comment above)
+   would not read correctly here. Instead two wave shapes
+   cross-fade + shift based on scroll position: home.js measures
+   this element's position on scroll and writes the progress to
+   --morph (0 -> 1), so shape A (the stack's flat edge) blends
+   into shape B (a soil mound) as the user scrolls past -- read
+   by the eye as one shape morphing into the other. Falls back to
+   a static shape A with no JS, and home.js skips the scroll
+   listener entirely for prefers-reduced-motion, freezing on the
+   settled "soil" state instead of tracking scroll position.
+   ========================================================= */
+.section-morph {
+  position: relative;
+  height: 110px;
+  overflow: hidden;
+  background: var(--cloth);
+}
+.section-morph svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.morph-shape--from {
+  fill: var(--cloth-deep);
+  opacity: calc(1 - var(--morph, 0));
+  transform: translateY(calc(var(--morph, 0) * -8px));
+}
+.morph-shape--to {
+  fill: rgba(122, 27, 43, 0.16);
+  opacity: var(--morph, 0);
+  transform: translateY(calc((1 - var(--morph, 0)) * 10px));
+}
+@media (max-width: 600px) {
+  .section-morph {
+    height: 70px;
+  }
+}
+
+/* =========================================================
+   HOME — "Seeds of Change" growth illustration + write-up
+   A standalone section (own background wash, not merged with
+   the card-stack above it -- see .section-morph). The SVG plant
+   draws/blooms in brand colors (gold leaves, maroon stem) once
+   scrolled into view, then loops continuously: each animated
+   part uses `infinite alternate` on a *shared* duration, so
+   growth and gentle wilt keep breathing in and out in sync
+   rather than playing once and freezing. The global
+   prefers-reduced-motion override (top of file) forces
+   iteration-count to 1, and because each keyframe's end state
+   (100%) is the fully grown/bloomed pose, reduced-motion users
+   still land on a complete illustration rather than a blank one.
+   ========================================================= */
+.seeds-section {
+  background: linear-gradient(180deg, var(--cloth-deep) 0%, var(--cloth) 55%);
+  padding-top: 70px;
+}
+.seeds-wrap {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 56px;
+  align-items: center;
+}
+.seeds-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.seeds-visual::before {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 162, 39, 0.16),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.seed-plant {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 300px;
+  display: block;
+  transform-origin: 50% 96%;
+}
+.seed-soil {
+  fill: var(--maroon-soft);
+  opacity: 0.22;
+}
+.seed-stem {
+  fill: none;
+  stroke: var(--maroon);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.seeds-visual.in .seed-stem {
+  animation: seedStemLoop 6s ease-in-out infinite alternate;
+}
+.seed-leaf {
+  fill: var(--gold);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.3);
+}
+.seeds-visual.in .seed-leaf--l1 {
+  animation: seedLeafLoop1 6s ease-in-out infinite alternate;
+}
+.seeds-visual.in .seed-leaf--r1 {
+  animation: seedLeafLoop2 6s ease-in-out infinite alternate;
+}
+.seeds-visual.in .seed-leaf--l2 {
+  animation: seedLeafLoop3 6s ease-in-out infinite alternate;
+  fill: var(--gold-soft);
+}
+.seeds-visual.in .seed-leaf--r2 {
+  animation: seedLeafLoop4 6s ease-in-out infinite alternate;
+  fill: var(--gold-soft);
+}
+.seed-petals circle,
+.seed-bud {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+}
+.seed-petals circle {
+  fill: var(--maroon-soft);
+}
+.seed-bud {
+  fill: var(--maroon);
+}
+.seeds-visual.in .seed-petals circle:nth-child(1) {
+  animation: seedBloomLoop 6s ease-in-out infinite alternate;
+}
+.seeds-visual.in .seed-petals circle:nth-child(2) {
+  animation: seedBloomLoop 6s ease-in-out infinite alternate;
+  animation-delay: -0.06s;
+}
+.seeds-visual.in .seed-petals circle:nth-child(3) {
+  animation: seedBloomLoop 6s ease-in-out infinite alternate;
+  animation-delay: -0.12s;
+}
+.seeds-visual.in .seed-petals circle:nth-child(4) {
+  animation: seedBloomLoop 6s ease-in-out infinite alternate;
+  animation-delay: -0.18s;
+}
+.seeds-visual.in .seed-bud {
+  animation: seedBloomLoop 6s ease-in-out infinite alternate;
+}
+.seeds-visual.in .seed-plant {
+  animation: seedSway 5s ease-in-out infinite alternate;
+}
+/* Stem: quick draw, long hold, quick undraw (played in reverse by
+   `alternate`) -- see block comment above for why 100% = grown. */
+@keyframes seedStemLoop {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  22% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+/* Leaves pop in staggered (l1 first, r2 last) purely via keyframe
+   percentage offsets -- not animation-delay -- so all four stay
+   perfectly synced with the stem across every infinite loop. */
+@keyframes seedLeafLoop1 {
+  0%, 26% { opacity: 0; transform: scale(0.3); }
+  40% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes seedLeafLoop2 {
+  0%, 32% { opacity: 0; transform: scale(0.3); }
+  46% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes seedLeafLoop3 {
+  0%, 38% { opacity: 0; transform: scale(0.3); }
+  52% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes seedLeafLoop4 {
+  0%, 44% { opacity: 0; transform: scale(0.3); }
+  58% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes seedBloomLoop {
+  0%, 62% { opacity: 0; transform: scale(0); }
+  76% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes seedSway {
+  0% {
+    transform: rotate(-0.6deg);
+  }
+  100% {
+    transform: rotate(1.1deg);
+  }
+}
+.seeds-copy p {
+  color: #3a3128;
+  margin-top: 16px;
+  font-size: 16px;
+}
+.seeds-quote {
+  margin-top: 22px;
+  padding-left: 20px;
+  border-left: 3px solid var(--gold);
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--maroon-deep) !important;
+}
+@media (max-width: 900px) {
+  .seeds-wrap {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    text-align: center;
+  }
+  .seed-plant {
+    max-width: 220px;
+  }
+  .seeds-quote {
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   HOME — "How We Work" process strip
+   ========================================================= */
+.process-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  position: relative;
+  z-index: 2;
+  margin-top: 44px;
+}
+.process-step {
+  text-align: center;
+  padding: 0 6px;
+}
+.process-row .process-step:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.process-row .process-step:nth-child(3) {
+  transition-delay: 0.16s;
+}
+.process-row .process-step:nth-child(4) {
+  transition-delay: 0.24s;
+}
+.process-num {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--maroon));
+  color: var(--white);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(122, 27, 43, 0.28);
+}
+.process-step h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.process-step p {
+  font-size: 14px;
+  color: #5a4d3f;
+}
+@media (max-width: 900px) {
+  .process-row {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 40px;
+  }
+}
+@media (max-width: 520px) {
+  .process-row {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
