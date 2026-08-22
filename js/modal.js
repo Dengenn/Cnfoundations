@@ -1,7 +1,15 @@
 /* =========================================================
-   modal.js — shared "View Details / View More" popup
+   modal.js — shared "View Details / View More" popup + lightbox
    Populated by projects.js and scholarships.js via
    window.SiteDetails[id] = { tag, title, photos, writeup, sources }
+
+   The full-image lightbox (zoom / pan / prev-next) below always
+   initialises, on every page that loads this file. Only the
+   detail-popup wiring (openModal/closeModal, the #modalOverlay
+   card) is gated on that overlay actually existing on the page —
+   projects.html and scholarships.html have it; gallery.html does
+   not and simply uses the lightbox on its own [data-full-image]
+   tiles instead.
    ========================================================= */
 window.SiteDetails = window.SiteDetails || {};
 
@@ -74,16 +82,27 @@ window.SiteDetails = window.SiteDetails || {};
       .join("");
   }
 
+  // Any container that groups a set of [data-full-image] triggers is a
+  // "gallery scope" the lightbox pages through together -- the detail
+  // modal's own photo grid, and the standalone gallery.html grid.
+  var GALLERY_SCOPE_SELECTOR = ".modal-gallery, .gallery-grid";
+
   document.addEventListener("DOMContentLoaded", function () {
     var overlay = document.getElementById("modalOverlay");
-    if (!overlay) return; // page has no modal (e.g. news, about)
 
-    var modalTag = document.getElementById("modalTag");
-    var modalTitle = document.getElementById("modalTitle");
-    var modalGallery = document.getElementById("modalGallery");
-    var modalWriteup = document.getElementById("modalWriteup");
-    var modalSource = document.getElementById("modalSource");
-    var modalClose = document.getElementById("modalClose");
+    // These only exist on pages that ship the #modalOverlay markup
+    // (projects.html, scholarships.html).
+    var modalTag, modalTitle, modalGallery, modalWriteup, modalSource, modalClose;
+    if (overlay) {
+      modalTag = document.getElementById("modalTag");
+      modalTitle = document.getElementById("modalTitle");
+      modalGallery = document.getElementById("modalGallery");
+      modalWriteup = document.getElementById("modalWriteup");
+      modalSource = document.getElementById("modalSource");
+      modalClose = document.getElementById("modalClose");
+    }
+
+    /* ---------------- Full-image lightbox (always available) ---------------- */
     var viewerScale = 1;
     var viewerImages = [];
     var viewerIndex = 0;
@@ -108,9 +127,10 @@ window.SiteDetails = window.SiteDetails || {};
     var viewerImg = imageViewer.querySelector("img");
     var viewerCaption = imageViewer.querySelector(".image-viewer__caption");
 
-    function galleryImages() {
+    function galleryImages(scopeEl) {
+      var scope = scopeEl || document;
       return Array.prototype.slice
-        .call(modalGallery.querySelectorAll("[data-full-image]"))
+        .call(scope.querySelectorAll("[data-full-image]"))
         .map(function (el) {
           return {
             src: el.getAttribute("data-full-image"),
@@ -134,8 +154,8 @@ window.SiteDetails = window.SiteDetails || {};
       paintViewerZoom();
     }
 
-    function openImageViewer(index) {
-      viewerImages = galleryImages();
+    function openImageViewer(scopeEl, index) {
+      viewerImages = galleryImages(scopeEl);
       showViewerImage(index);
       imageViewer.classList.add("open");
     }
@@ -180,7 +200,9 @@ window.SiteDetails = window.SiteDetails || {};
         paintViewerZoom();
       });
 
+    /* ---------------- Detail popup (projects.html / scholarships.html only) ---------------- */
     function openModal(id) {
+      if (!overlay) return;
       var d = window.SiteDetails[id];
       if (!d) return;
       modalTag.textContent = d.tag;
@@ -196,6 +218,7 @@ window.SiteDetails = window.SiteDetails || {};
       document.body.style.overflow = "hidden";
     }
     function closeModal() {
+      if (!overlay) return;
       overlay.classList.remove("open");
       document.body.style.overflow = "";
     }
@@ -203,7 +226,11 @@ window.SiteDetails = window.SiteDetails || {};
     document.addEventListener("click", function (e) {
       var fullImage = e.target.closest("[data-full-image]");
       if (fullImage) {
-        openImageViewer(Number(fullImage.getAttribute("data-image-index")) || 0);
+        var scope = fullImage.closest(GALLERY_SCOPE_SELECTOR) || document;
+        openImageViewer(
+          scope,
+          Number(fullImage.getAttribute("data-image-index")) || 0,
+        );
         return;
       }
       var btn = e.target.closest("[data-detail]");
@@ -212,9 +239,11 @@ window.SiteDetails = window.SiteDetails || {};
       }
     });
     if (modalClose) modalClose.addEventListener("click", closeModal);
-    overlay.addEventListener("click", function (e) {
-      if (e.target === overlay) closeModal();
-    });
+    if (overlay) {
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) closeModal();
+      });
+    }
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && imageViewer.classList.contains("open")) {
         closeImageViewer();

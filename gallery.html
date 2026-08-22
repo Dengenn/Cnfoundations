@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News & Updates &mdash; Sir Chris Nkwonta Foundation</title>
+    <title>Gallery &mdash; Sir Chris Nkwonta Foundation</title>
     <meta
       name="description"
-      content="The latest public reporting and coverage of Rep. Chris Nkwonta."
+      content="Photos from the Sir Chris Nkwonta Foundation's projects, scholarships, events, and infrastructure work across Ukwa East and Ukwa West."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -45,31 +45,69 @@
           <a href="mission.html">Mission</a>
           <a href="projects.html">Projects</a>
           <a href="scholarships.html">Scholarships</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="news.html" class="active">News</a>
+          <a href="gallery.html" class="active">Gallery</a>
+          <a href="news.html">News</a>
           <a href="contact.html" class="nav-cta">Contact & Support</a>
         </nav>
       </div>
     </header>
 
-    <section class="page-hero">
+    <section class="page-hero gallery-hero">
       <div class="blob b1"></div>
       <div class="blob b2"></div>
       <div class="wrap">
-        <div class="section-head" data-reveal>
-          <span class="eyebrow">In the Press</span>
-          <h1>News &amp; Updates</h1>
+        <div class="section-head center" data-reveal>
+          <span class="eyebrow">Moments &amp; Milestones</span>
+          <h1>The Gallery</h1>
           <p>
-            Public reporting on Rep. Chris Nkwonta, newest first. Each item
-            links back to its original source.
+            Projects, scholarships, events, and infrastructure &mdash; every
+            picture the Foundation has to show for a decade and a half of
+            work across Ukwa East and Ukwa West.
           </p>
         </div>
       </div>
+      <div class="gallery-marquee" data-reveal>
+        <div class="gallery-marquee__track" id="marqueeTrack"></div>
+      </div>
     </section>
 
-    <section class="on-white">
+    <section class="on-white gallery-section">
       <div class="wrap">
-        <div class="news-list" id="newsList"></div>
+        <div class="gallery-filters" id="galleryFilters">
+          <div class="gallery-filters__track">
+            <span
+              class="gallery-filters__highlight"
+              id="filterHighlight"
+              aria-hidden="true"
+            ></span>
+            <button type="button" class="filter-pill active" data-filter="all">
+              All
+            </button>
+            <button type="button" class="filter-pill" data-filter="projects">
+              Projects
+            </button>
+            <button
+              type="button"
+              class="filter-pill"
+              data-filter="scholarships"
+            >
+              Scholarships
+            </button>
+            <button type="button" class="filter-pill" data-filter="events">
+              Events
+            </button>
+            <button
+              type="button"
+              class="filter-pill"
+              data-filter="infrastructure"
+            >
+              Infrastructure
+            </button>
+          </div>
+          <span class="gallery-filters__count" id="galleryCount"></span>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid"></div>
       </div>
     </section>
 
@@ -166,6 +204,7 @@
     </footer>
     <script src="js/main.js"></script>
     <script src="js/cookies.js"></script>
-    <script src="js/news.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/gallery.js"></script>
   </body>
 </html>
