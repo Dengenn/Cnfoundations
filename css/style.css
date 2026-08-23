@@ -2933,9 +2933,6 @@ footer .bottom a[href="privacy.html"] {
   padding-top: 56px;
 }
 .gallery-filters {
-  position: sticky;
-  top: calc(var(--nav-h) + 14px);
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
