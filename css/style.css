@@ -1227,6 +1227,16 @@ section.on-maroon .section-head p {
   flex-direction: column;
   gap: 20px;
 }
+/* The 2012-14 / 2023 entries were moved out of the left-column timeline
+   into the right column (after the story text, before the Snapshot box)
+   to balance the two columns' heights -- the left column ran much taller
+   than the right with all seven entries stacked under the portrait. This
+   modifier trims the spacing to match the paragraph rhythm it now sits
+   in, rather than the more generous gap meant for sitting under a photo. */
+.timeline--recent {
+  margin-top: 22px;
+  gap: 16px;
+}
 .about-support,
 .about-snapshot {
   margin: 34px 0 0;
@@ -1360,15 +1370,89 @@ section.on-maroon .section-head p {
   z-index: 2;
 }
 .card {
+  --lift: 0px;
+  --tilt: 0deg;
+  position: relative;
+  overflow: hidden;
   border-radius: 16px;
   padding: 28px 26px;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: box-shadow 0.18s ease;
+  animation: cardTilt 3.6s ease-in-out infinite;
 }
 .card:hover {
-  transform: translateY(-4px);
+  --lift: -4px;
   box-shadow: 0 18px 36px rgba(54, 12, 19, 0.18);
+}
+/* Continuous tilt, same slow 3.6s/ease-in-out pace as the icon float
+   below. Driven off --lift/--tilt (set per-card and on :hover) rather
+   than a second `transform` declaration, so the hover lift blends into
+   the animation instead of fighting it for who "wins" the property --
+   animations otherwise always beat a plain transform rule, even on
+   :hover. Net effect: each card keeps gently tilting even while
+   hovered, just lifted at the same time. */
+@keyframes cardTilt {
+  0%,
+  100% {
+    transform: translateY(var(--lift)) rotate(0deg);
+  }
+  50% {
+    transform: translateY(calc(var(--lift) - 5px)) rotate(var(--tilt));
+  }
+}
+/* Shine sweep on hover -- reuses the same treatment as .btn/.btn-view
+   elsewhere on the site so it reads as consistent, not bolted on. */
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+.card:hover::after {
+  left: 130%;
+}
+/* Staggered fade-up: same [data-reveal] transition already used
+   sitewide, just offset per card so all six don't land in one beat.
+   Each card also gets its own --tilt (alternating direction/angle) and
+   a negative animation-delay so the six cards tilt out of phase with
+   each other, not in unison. */
+.card-grid .card:nth-child(1) {
+  --tilt: 1.6deg;
+}
+.card-grid .card:nth-child(2) {
+  --tilt: -1.4deg;
+  transition-delay: 0.08s;
+  animation-delay: -0.6s;
+}
+.card-grid .card:nth-child(3) {
+  --tilt: 2deg;
+  transition-delay: 0.16s;
+  animation-delay: -1.2s;
+}
+.card-grid .card:nth-child(4) {
+  --tilt: -1.8deg;
+  transition-delay: 0.24s;
+  animation-delay: -1.8s;
+}
+.card-grid .card:nth-child(5) {
+  --tilt: 1.2deg;
+  transition-delay: 0.32s;
+  animation-delay: -2.4s;
+}
+.card-grid .card:nth-child(6) {
+  --tilt: -2.1deg;
+  transition-delay: 0.4s;
+  animation-delay: -3s;
 }
 .card .ico {
   width: 42px;
@@ -1381,6 +1465,47 @@ section.on-maroon .section-head p {
   align-items: center;
   justify-content: center;
   color: var(--white);
+  animation: iconFloat 3.6s ease-in-out infinite;
+}
+/* Negative delays start each icon mid-cycle right away instead of all
+   six floating in lockstep -- reads as alive rather than mechanical. */
+.card:nth-child(2) .ico {
+  animation-delay: -0.6s;
+}
+.card:nth-child(3) .ico {
+  animation-delay: -1.2s;
+}
+.card:nth-child(4) .ico {
+  animation-delay: -1.8s;
+}
+.card:nth-child(5) .ico {
+  animation-delay: -2.4s;
+}
+.card:nth-child(6) .ico {
+  animation-delay: -3s;
+}
+.card:hover .ico {
+  animation: iconPulse 0.6s ease;
+}
+@keyframes iconFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+}
+@keyframes iconPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  45% {
+    transform: scale(1.18) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 .card .ico svg {
   width: 22px;
@@ -1403,6 +1528,26 @@ section.on-maroon .section-head p {
   .card-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Slow ambient drift for the services-page hero blobs only, opted into
+   via an extra class added on services.html -- the shared .blob used in
+   every other page's hero is untouched. */
+@keyframes blobDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(16px, -12px) scale(1.06);
+  }
+}
+.blob-drift {
+  animation: blobDrift 9s ease-in-out infinite;
+}
+.blob-drift--rev {
+  animation-direction: reverse;
+  animation-duration: 11s;
 }
 
 /* =========================================================
@@ -2278,7 +2423,8 @@ footer .bottom a[href="privacy.html"] {
    taken for a project/tier makes it into that project's own write-up;
    this is the hand-off to the full, browsable collection. */
 .modal-gallery-cta {
-  margin-top: 20px;
+  margin-top: -8px;
+  margin-bottom: 26px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
