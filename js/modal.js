@@ -74,7 +74,7 @@ window.SiteDetails = window.SiteDetails || {};
         return (
           '<span>Source: <a href="' +
           s.url +
-          '" target="_blank" rel="noopener">' +
+          '" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">' +
           s.label +
           "</a></span>"
         );

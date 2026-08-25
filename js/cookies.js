@@ -131,7 +131,7 @@ window.SCNFCookies = window.SCNFCookies || {};
       iframe.height = "100%";
       iframe.style.border = "0";
       iframe.loading = "lazy";
-      iframe.allowFullscreen = true;
+      iframe.sandbox = "allow-scripts allow-same-origin";
       slot.innerHTML = "";
       slot.appendChild(iframe);
     }

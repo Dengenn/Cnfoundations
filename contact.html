@@ -170,11 +170,11 @@
             <form id="contactForm">
               <div class="field">
                 <label for="name">Full Name</label
-                ><input id="name" name="name" type="text" required />
+                ><input id="name" name="name" type="text" required maxlength="200" autocomplete="name" />
               </div>
               <div class="field">
                 <label for="email">Email</label
-                ><input id="email" name="email" type="email" required />
+                ><input id="email" name="email" type="email" required maxlength="200" autocomplete="email" />
               </div>
               <div class="field">
                 <label for="reason">I'm reaching out about</label>
@@ -191,7 +191,7 @@
               </div>
               <div class="field">
                 <label for="msg">Message</label
-                ><textarea id="msg" name="message" rows="8" required></textarea>
+                ><textarea id="msg" name="message" rows="8" required maxlength="2000"></textarea>
               </div>
               <button
                 type="submit"
@@ -320,7 +320,7 @@
             return;
           }
 
-          var recipient = "email@example.gmail.com";
+          var recipient = "email" + "@" + "example.gmail.com";
           var subject = reason;
           var body =
             "Name: " +

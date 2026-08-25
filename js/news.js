@@ -83,7 +83,7 @@
       '<div>' +
         '<h3>' + n.title + '</h3>' +
         '<p>' + n.body + '</p>' +
-        '<a class="src" href="' + n.source.url + '" target="_blank" rel="noopener">Source: ' + n.source.label + '</a>' +
+        '<a class="src" href="' + n.source.url + '" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Source: ' + n.source.label + '</a>' +
       '</div>';
     list.appendChild(el);
   });
